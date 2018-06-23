@@ -1,3 +1,4 @@
+const request = require('request')
 const fs = require('fs');
 const elasticsearch = require('elasticsearch');
 
@@ -34,10 +35,22 @@ const bulkIndex = function bulkIndex(index, type, data) {
 };
   
 const carga = function carga() {
-  const articlesRaw = fs.readFileSync('data.json');
-  const articles = JSON.parse(articlesRaw);
-  console.log(`${articles.length} itens parseados do arquivo de dados.`);
-  bulkIndex('library', 'article', articles);
+
+  const reqBody = {
+    uri: 'http://localhost:9200/library/article/_search'
+  }
+
+  request(reqBody, (req, res) =>{
+    let obj = JSON.parse(res.body);
+    if(obj.hits.total == 0) {
+      const articlesRaw = fs.readFileSync('data.json');
+      const articles = JSON.parse(articlesRaw);
+      console.log(`${articles.length} itens parseados do arquivo de dados.`);
+      bulkIndex('library', 'article', articles);
+    } else {
+      console.log("O Banco ja possui dados carregados.")
+    }
+  });
 };
 
 module.exports = carga;
