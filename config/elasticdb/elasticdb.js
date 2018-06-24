@@ -37,7 +37,7 @@ const bulkIndex = function bulkIndex(index, type, data) {
 const carga = function carga() {
 
   const reqBody = {
-    uri: 'http://localhost:9200/library1/article/_search'
+    uri: 'http://localhost:9200/library/article/_search'
   }
 
   request(reqBody, (req, res) =>{
@@ -46,7 +46,7 @@ const carga = function carga() {
       const articlesRaw = fs.readFileSync('data.json');
       const articles = JSON.parse(articlesRaw);
       console.log(`${articles.length} itens parseados do arquivo de dados.`);
-      bulkIndex('library1', 'article', articles);
+      bulkIndex('library', 'article', articles);
     } else {
       console.log("O Banco ja possui dados carregados.")
     }
