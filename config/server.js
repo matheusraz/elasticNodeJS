@@ -15,5 +15,5 @@ server.listen(port, (err) =>{
         return console.log("Algo deu errado", err);
     }
     console.log(`Servidor online escutando na porta ${port}`);
-    carregarDados();
+    carregarDados.carga();
 });
