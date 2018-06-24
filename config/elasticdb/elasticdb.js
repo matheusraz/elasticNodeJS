@@ -43,10 +43,10 @@ const carga = function carga() {
   request(reqBody, (req, res) =>{
     let obj = JSON.parse(res.body);
     if(obj.hits == undefined || obj.hits.total == 0) {
-      const articlesRaw = fs.readFileSync('data.json');
-      const articles = JSON.parse(articlesRaw);
-      console.log(`${articles.length} itens parseados do arquivo de dados.`);
-      bulkIndex('library', 'article', articles);
+      const visitsRaw = fs.readFileSync('data.json');
+      const visits = JSON.parse(visitsRaw);
+      console.log(`${visits.length} itens parseados do arquivo de dados.`);
+      bulkIndex('users', 'visits', visits);
     } else {
       console.log("O Banco ja possui dados carregados.")
     }
@@ -61,7 +61,7 @@ const getAllContent = () => {
       match_all:{}
     }
   };
-  return esClient.search({index: "library", type: "article", body: body})
+  return esClient.search({index: "users", type: "visits", body: body})
 };
 
 exports.getAllContent = getAllContent;
