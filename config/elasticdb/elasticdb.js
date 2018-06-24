@@ -53,4 +53,15 @@ const carga = function carga() {
   });
 };
 
-module.exports = carga;
+exports.carga = carga;
+
+const getAllContent = () => {
+  let body = {
+    query:{
+      match_all:{}
+    }
+  };
+  return esClient.search({index: "library", type: "article", body: body})
+};
+
+exports.getAllContent = getAllContent;
